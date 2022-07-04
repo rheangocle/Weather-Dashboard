@@ -1,0 +1,28 @@
+:root {
+  --gray: #808080;
+  --yellow: #E6DE8A;
+  --tur-blue: #61A3B3;
+  --dark-blue: #677C8C;
+  --light-gray: #B3B1A1;
+}
+
+.nav {
+  background-color: #61A3B3;
+}
+
+.today-info {
+  background-color: gray;
+  color:aliceblue;
+}
+
+.today-info h2 {
+  font-size: 2.5em;
+}
+
+.search-btn {
+  background-color: #E6DE8A;
+}
+
+.prev-cities {
+  background-color:var(--light-gray);
+}
