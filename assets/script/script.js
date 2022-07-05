@@ -20,9 +20,9 @@ var today = moment().format('MM/DD/YY');
 var fiveDayEl = $('.five-day-container');
 var searchListEl = $('.city-searches');
 
-function getToday(event) {
+function getToday() {
   //Display today's weather
-  event.preventDefault();
+  // event.preventDefault();
   fetch(queryURL, {
     method: 'GET',
   })
@@ -39,7 +39,8 @@ function getToday(event) {
       <p>💧 Humidity: ${data.main.humidity}%</p>
       <p>💨 Wind speed: ${data.wind.speed} mph</p>`;
 
-      todayWeather.append(currentCityInfo);
+      //changed from .append to .html so that info would not keep occuring on the page every time search entry is submitted. 
+      todayWeather.html(currentCityInfo);
       var latitude = data.coord.lat;
       var longitude = data.coord.lon;
 
@@ -73,8 +74,8 @@ function getToday(event) {
     })
 }
 
-function getForecast(event) {
-  event.preventDefault();
+function getForecast() {
+  // event.preventDefault();
   var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},US&appid=${apiKey}`;
   var latLon = [];
 
@@ -105,7 +106,8 @@ function getForecast(event) {
         })
         .then(function (data) {
           console.log(data);
-          fiveDayEl.append(`<h3>5 Day Forecast</h3>`);
+          //changed from append to html so that the info would not repopulate on page after every submit button
+          fiveDayEl.html(`<h3>5 Day Forecast</h3>`);
 
           for (var i = 1; i < data.daily.length - 2; i++) {
             var dayForecast = `
@@ -180,21 +182,35 @@ function getForecast(event) {
 
 //Set up local storage
 
+
 //Add city search to list
 function citySearch(e) {
-  e.preventDefault();
-  var cityList = `
+  e.preventDefault
+
+  var cityArr = [];
+  // cityArr.push(city);
+  // console.log(searchHistory);
+  getToday();
+  getForecast();
+  if (!cityArr.includes(city)) {
+    var cityList = `
     <div class="list-group">
       <button type="button" class="list-group-item list-group-item-action active prev-cities"
         aria-current="true">
         ${city}
       </button>
     </div>`
-  searchListEl.append(cityList);
+    searchListEl.append(cityList);
+    cityArr.push(city);
+  }
+  //need to add code to check if city is duplicate and remove it, need to add list of searched cities to local storage
+
+  localStorage.setItem('city', JSON.stringify(cityArr))
+  console.log(cityArr)
 }
 
 //Event Listener for submit button
 var searchBtn = $('.search-btn');
-searchBtn.click(getToday);
-searchBtn.click(getForecast);
+// searchBtn.click(getToday);
+// searchBtn.click(getForecast);
 searchBtn.click(citySearch);

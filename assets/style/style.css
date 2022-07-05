@@ -15,6 +15,10 @@
   color: aliceblue;
 }
 
+.card {
+  border: none;
+}
+
 .forecast-card {
   background-color: var(--dark-blue);
   color: aliceblue;
