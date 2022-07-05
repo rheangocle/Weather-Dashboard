@@ -6,19 +6,19 @@ WHEN I view current weather conditions for that city ✅
 THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index ===✅
 WHEN I view the UV index ✅
 THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe ✅
-WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+WHEN I view future weather conditions for that city ✅
+THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity ✅
 WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 */
-
+//Declare variables
 const apiKey = 'dab6c26050c6340b4ec6ae2e98ef076c';
 let city = $('.city-input').val().trim();
 const queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 var todayWeather = $('.weather-today');
 var today = moment().format('MM/DD/YY');
-
 var fiveDayEl = $('.five-day-container');
+var searchListEl = $('.city-searches');
 
 function getToday(event) {
   //Display today's weather
@@ -73,11 +73,11 @@ function getToday(event) {
     })
 }
 
-var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},US&appid=${apiKey}`
-var latLon = []
-
 function getForecast(event) {
   event.preventDefault();
+  var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},US&appid=${apiKey}`;
+  var latLon = [];
+
   fetch(geoURL, {
     method: 'GET',
   })
@@ -111,7 +111,7 @@ function getForecast(event) {
             var dayForecast = `
             <div class="card card-body forecast-card col-2">
               <h5 class="card-title">${moment.unix(data.daily[i].dt).format('MM/DD/YY')}</h5>
-              <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}.png" alt='weather icon' width='80' height='80'>
+              <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}.png" alt='weather icon' width='90' height='90'>
               <p class="card-text">Temperature: ${Math.round(data.daily[i].temp.day)} ºF</p>
               <p class="card-text">Wind speed: ${data.daily[i].wind_speed} mph</p>
               <p class="card-text">Humidity: ${data.daily[i].humidity} %</p>
@@ -178,19 +178,23 @@ function getForecast(event) {
     })
 }
 
-// $.ajax({
-//   url: queryURL,
-//   method: 'GET',
-// }).then(function (response) {
-//   console.log('Ajax Reponse \n-------------');
-//   console.log(response);
-//   // success: function( result ) {
-//   //   $( "#weather-temp" ).html( "<strong>" + result + "</strong> degrees" );
-//   // }
-// });
+//Set up local storage
 
+//Add city search to list
+function citySearch(e) {
+  e.preventDefault();
+  var cityList = `
+    <div class="list-group">
+      <button type="button" class="list-group-item list-group-item-action active prev-cities"
+        aria-current="true">
+        ${city}
+      </button>
+    </div>`
+  searchListEl.append(cityList);
+}
 
 //Event Listener for submit button
 var searchBtn = $('.search-btn');
 searchBtn.click(getToday);
 searchBtn.click(getForecast);
+searchBtn.click(citySearch);
