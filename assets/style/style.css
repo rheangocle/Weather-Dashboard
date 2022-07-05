@@ -12,7 +12,12 @@
 
 .today-info {
   background-color: gray;
-  color:aliceblue;
+  color: aliceblue;
+}
+
+.forecast-card {
+  background-color: var(--dark-blue);
+  color: aliceblue;
 }
 
 .today-info h2 {
@@ -24,5 +29,36 @@
 }
 
 .prev-cities {
-  background-color:var(--light-gray);
+  background-color: var(--light-gray);
+}
+
+.bg-green {
+  background-color: green;
+  border-radius: 10px;
+  padding: 7px;
+}
+
+.bg-yellow {
+  background-color: yellow;
+  color: black;
+  border-radius: 10px;
+  padding: 7px;
+}
+
+.bg-orange {
+  background-color: orange;
+  border-radius: 10px;
+  padding: 7px;
+}
+
+.bg-red {
+  background-color: red;
+  border-radius: 10px;
+  padding: 7px;
+}
+
+.bg-purple {
+  background-color: purple;
+  border-radius: 10px;
+  padding: 7px;
 }
