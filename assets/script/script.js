@@ -13,12 +13,22 @@ THEN I am again presented with current and future conditions for that city
 */
 //Declare variables
 const apiKey = 'dab6c26050c6340b4ec6ae2e98ef076c';
-
-
 var todayWeather = $('.weather-today');
 var today = moment().format('MM/DD/YY');
 var fiveDayEl = $('.five-day-container');
 var searchListEl = $('.list-group');
+var cityArr = [];
+
+$(document).ready(function () {
+  var storedCities = JSON.parse(localStorage.getItem('cities'));
+
+  if (storedCities.length > 0) {
+    var prevCity = storedCities.length[storedCities.length - 1];
+    getToday(prevCity);
+    //cityArr = storedCities;
+
+  }
+})
 
 function getToday(city) {
   //Display today's weather
@@ -44,7 +54,10 @@ function getToday(city) {
       todayWeather.html(currentCityInfo);
       var latitude = data.coord.lat;
       var longitude = data.coord.lon;
+
+      //Passing coordinates into api url for getting 5 cay forecast
       getForecast(latitude, longitude);
+
       //Getting the UV Index information for current day
       var uvURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=imperial&exclude=minutely,hourly,alerts&appid=${apiKey}`;
 
@@ -77,26 +90,9 @@ function getToday(city) {
 
 function getForecast(latitude, longitude) {
   // event.preventDefault();
-  // var geoURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},US&appid=${apiKey}`;
-  // var latLon = [];
-
-  // fetch(geoURL, {
-  //   method: 'GET',
-  // })
-  //   .then(function (response) {
-  //     //console.log(response)
-  //     return response.json();
-  //   })
-  //   .then(function (latLonData) {
-  //     //console.log(latLonData);
-  //     var arr = latLonData
-  //     latLon.push(arr[0].lat);
-  //     latLon.push(arr[0].lon);
-  //     //console.log(latLon)
 
   //Five day forecast
   var fiveDayUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=imperial&exclude=current,minutely,hourly,alerts&appid=${apiKey}`
-  // `https://api.openweathermap.org/data/2.5/forecast?lat=${latLon[0]}&lon=${latLon[1]}&units=imperial&appid=${apiKey}`
 
   fetch(fiveDayUrl, {
     method: 'GET',
@@ -107,7 +103,6 @@ function getForecast(latitude, longitude) {
     })
     .then(function (data) {
       console.log(data);
-      //changed from append to html so that the info would not repopulate on page after every submit button
       fiveDayEl.html(`<h3>5 Day Forecast</h3>`);
 
       for (var i = 1; i < data.daily.length - 2; i++) {
@@ -123,44 +118,41 @@ function getForecast(latitude, longitude) {
         fiveDayEl.append(dayForecast);
         console.log(fiveDayEl)
       }
-
     })
-
 }
 
+//first loading document, check local storage (getItem); document.ready function()...
 
-//Set up local storage
+//Add city search to list and save to local storage
+var citySearch = (e) => {
+  e.preventDefault()
 
-
-//Add city search to list
-function citySearch(e) {
-  e.preventDefault
-
-  var cityArr = [];
   // cityArr.push(city);
   // console.log(searchHistory);
   let city = $('.city-input').val().trim();
+
   getToday(city);
 
-
   if (!cityArr.includes(city)) {
-    //might remove some of these classes
-    var cityList = `
-      <button type="button" class="list-group-item list-group-item-action active prev-cities"
-        aria-current="true">
-        ${city}
-      </button>`
-    searchListEl.html(cityList); //append or html here??
-    cityArr.push(city);
-  }
-  //need to add code to check if city is duplicate and remove it, need to add list of searched cities to local storage
 
-  localStorage.setItem('city', JSON.stringify(cityArr))
-  console.log(cityArr)
+    cityArr.push(city);
+    var cityList = `
+    <button type="button" class="list-group-item prev-cities"
+      aria-current="true">
+      ${city}
+    </button>`;
+    searchListEl.append(cityList);
+  }
+  localStorage.setItem('cities', JSON.stringify(cityArr))
 }
 
-//Event Listener for submit button
+//Loads current weather and five day forecast when user clicks on saved city
+$(document).on("click", ".prev-cities", function () {
+  var listCity = $(this).text();
+  getToday(listCity);
+});
+
+
+//Event Listener for search button
 var searchBtn = $('.search-btn');
-// searchBtn.click(getToday);
-// searchBtn.click(getForecast);
 searchBtn.click(citySearch);

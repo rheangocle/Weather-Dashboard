@@ -1,28 +1,19 @@
 # Weather-Dashboard
 
 ## Summary
+The weather dashboard was created using JS, jQuery, Moment, and the Openweather API. A traveler can use the weather dashboard to look for multiple cities and plan their trip accordingly. 
+- Deployed URL: [Weather Dashboard]()
 
 
-## User Story
-AS A traveler
-I WANT to see the weather outlook for multiple cities
-SO THAT I can plan a trip accordingly
+## Criteria
+With the weather dashboard, when the user loads the page, they will be able to search for a city. After clicking submit, the user will be presented with the current weather for the city, including temperature (in Fahrenheit), humidity, wind speed, and UV Index. The UV index value will have a color indicator showing whether the conditions are low, moderate, high, very high, or extreme risk. The user will also be presented with the five day forecast for the city. The last city search will show up underneath the search bar as a button that the user can click on to view the weather. Every city search will populate in the search history as a button that the user can click on to view the current and five day forecast.  
 
-## Acceptance Criteria
-GIVEN a weather dashboard with form inputs
-WHEN I search for a city
-THEN I am presented with current and future conditions for that city and that city is added to the search history
-WHEN I view current weather conditions for that city
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-WHEN I view the UV index
-THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-WHEN I click on a city in the search history
-THEN I am again presented with current and future conditions for that city
+## UV Index Scale
+From the [United States Environmental Protection Agency](https://www.epa.gov/sunsafety/uv-index-scale-0):
+- 🟩Low risk : 0-2
+- 🟨Moderate risk: 3-5
+- 🟧High risk: 6-7
+- 🟥Very high risk: 8-10
+- 🟪Extreme risk: 11+
 
-## Mock-Up
-The following image shows the web application's appearance and functionality:
-
-The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for Atlanta.
 
