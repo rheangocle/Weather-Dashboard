@@ -2,7 +2,7 @@
 
 ## Summary
 The weather dashboard was created using JS, jQuery, Moment, and the Openweather API. A traveler can use the weather dashboard to look for multiple cities and plan their trip accordingly. 
-- Deployed URL: [Weather Dashboard]()
+- Deployed URL: [Weather Dashboard](https://rheangocle.github.io/Weather-Dashboard/)
 
 
 ## Criteria
@@ -16,4 +16,6 @@ From the [United States Environmental Protection Agency](https://www.epa.gov/sun
 - 🟥Very high risk: 8-10
 - 🟪Extreme risk: 11+
 
+## Web Application
+![Screenshot of weather dashboard](./assets/style/Capture.PNG)
 
