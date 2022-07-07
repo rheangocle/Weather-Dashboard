@@ -8,10 +8,10 @@ $(document).ready(function () {
   var cityArr = [];
 
   //Get searched city list from local storage
-  var storedCities = JSON.parse(localStorage.getItem('cities'));
+  var storedCities = JSON.parse(localStorage.getItem('cities') || []);
 
   if (storedCities.length > 0) {
-    var prevCity = storedCities.length[storedCities.length - 1];
+    var prevCity = storedCities[storedCities.length - 1];
     getToday(prevCity);
   }
 
