@@ -8,13 +8,15 @@ $(document).ready(function () {
   var cityArr = [];
 
   //Get searched city list from local storage
-  var storedCities = JSON.parse(localStorage.getItem('cities') || []);
+  // function pastSearches() {
+  //   var storedCities = JSON.parse(localStorage.getItem('cities')) || [];
 
-  if (storedCities.length > 0) {
-    var prevCity = storedCities[storedCities.length - 1];
-    getToday(prevCity);
-  }
+  // if (storedCities.length > 0) {
+  //   var prevCity = storedCities[storedCities.length - 1];
+  //   getToday(prevCity);
+  // }
 
+  //}
 
   function getToday(city) {
     //Display today's weather
@@ -105,6 +107,7 @@ $(document).ready(function () {
       })
   }
 
+
   //Add city search to list and save to local storage
   var citySearch = (e) => {
     e.preventDefault()
@@ -114,13 +117,14 @@ $(document).ready(function () {
     if (!cityArr.includes(city)) {
       cityArr.push(city);
       var cityList = `
-    <button type="button" class="list-group-item prev-cities"
-      aria-current="true">
-      ${city}
-    </button>`;
+      <button type="button" class="list-group-item prev-cities"
+        aria-current="true">
+        ${city}
+      </button>`;
       searchListEl.append(cityList);
+      localStorage.setItem('cities', JSON.stringify(cityArr))
+      console.log(cityArr)
     }
-    localStorage.setItem('cities', JSON.stringify(cityArr))
   }
 
   //Loads current weather and five day forecast when user clicks on saved city
@@ -129,9 +133,8 @@ $(document).ready(function () {
     getToday(listCity);
   });
 
-
   //Event Listener for search button
   var searchBtn = $('.search-btn');
   searchBtn.click(citySearch);
-
+  //searchBtn.click(pastSearches);
 })
